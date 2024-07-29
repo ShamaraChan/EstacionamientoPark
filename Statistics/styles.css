@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8f5e9;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #0F2F42;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .logo {
+    margin-right: auto;
+}
+
+.header nav {
+    display: flex;
+    align-items: center;
+}
+
+.header nav a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    transition: background-color 0.3s, border 0.3s;
+}
+
+.header nav a:hover {
+    background-color: #174963;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+}
+
+.header .user-icon a {
+    display: inline-block;
+    padding: 10px;
+    color: white;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown .dropdown-toggle {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.dropdown .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+    padding: 10px 0;
+    border-radius: 5px;
+    display: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown .dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown .dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos responsivos */
+@media (max-width: 576px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .header nav a, .header .dropdown {
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    .user-icon {
+        align-self: center;
+    }
+
+    .dropdown .dropdown-menu {
+        min-width: 100px;
+    }
+    .chart-container {
+        padding: 10px;
+        border: 1px solid #ddd; /* Opcional, para separar visualmente los gráficos */
+        border-radius: 5px; /* Opcional, bordes redondeados */
+        background-color: #f9f9f9; /* Opcional, color de fondo */
+    }
+    
+}

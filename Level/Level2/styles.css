@@ -1,0 +1,331 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8f5e9;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #0F2F42;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header nav {
+    display: flex;
+    align-items: center;
+}
+
+.header nav a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    transition: background-color 0.3s, border 0.3s;
+}
+
+.header nav a:hover {
+    background-color: #1C5350;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+}
+
+.logo {
+    margin-right: auto;
+}
+
+.container {
+    padding: 20px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    color: #1C5350;
+}
+
+.btn-primary {
+    background-color: #1C5350;
+    border-color: #1C5350;
+}
+
+.btn-primary:hover {
+    background-color: #1C4544;
+    border-color: #1C4544;
+}
+
+.list-group-item.active {
+    background-color: #1C5350;
+    border-color: #1C5350;
+}
+
+.list-group-item-action:hover {
+    background-color: #21531c;
+}
+
+.btn-red {
+    background-color: rgb(140, 255, 0);
+    color: white;
+}
+
+.btn-red:hover {
+    background-color: rgb(212, 67, 67);
+    color: white;
+}
+
+.header .user-icon a {
+    display: inline-block;
+    padding: 10px;
+}
+
+.list-group-item i {
+    float: right;
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown .btn {
+    background-color: #0F2F42;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+    padding: 10px 0;
+    border-radius: 5px;
+    display: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown .dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+.parking-container {
+    position: relative;
+    width: 100%; /* Ajusta el ancho máximo según sea necesario */
+    max-width: 1000px; /* Centra el contenedor horizontalmente */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    border: 2px solid #000; /* Añade un borde para hacer visible el contenedor */
+    background-color: #f8f9fa; /* Fondo claro para visibilidad */
+    overflow: hidden; /* Asegura que los spots no salgan del contenedor */
+    height: auto; /* Ajusta la altura según la imagen */
+}
+
+.parking-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.parking-spot {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 47px 33px; /* Ajusta el tamaño del padding */
+    border-radius: 5px;
+    cursor: pointer;
+    transform: translate(-50%, -50%); /* Ajusta la posición al centro del punto específico */
+    color: #a09c9c;
+    pointer-events: auto; /* Habilita la respuesta al clic */
+}
+
+/* Estilos para estados de los spots */
+.spot-enabled {
+    background-color: #28a745; /* Verde */
+    color: white;
+}
+
+.spot-disabled {
+    background-color: #ffc107; /* Amarillo */
+    color: #856404;
+}
+
+/* Ajustes para posiciones específicas */
+#spot1 { top: 20.5%; left: 17.3%; }
+#spot2 { top: 20.5%; left: 25.4%; }
+#spot3 { top: 20.5%; left: 33.5%; }
+#spot4 { top: 20.5%; left: 41.6%; }
+#spot5 { top: 20.5%; left: 49.7%; }
+#spot6 { top: 20.5%; left: 57.8%; }
+#spot7 { top: 20.5%; left: 65.9%; }
+#spot8 { top: 20.5%; left: 73.99%; }
+#spot9 { top: 20.5%; left: 81.9%; padding: 47px 31.5px; }
+#spot10 { top: 83%; left: 9.9%; padding: 47px 19.4px; }
+#spot11 { top: 83%; left: 16.1%; padding: 47px 19.1px; }
+#spot12 { top: 83%; left: 22.2%; padding: 47px 19.2px; }
+#spot13 { top: 83%; left: 28.3%; padding: 47px 19px; }
+#spot14 { top: 83%; left: 34.4%; padding: 47px 19.2px; }
+#spot15 { top: 83%; left: 40.6%; padding: 47px 19.5px; }
+#spot16 { top: 83%; left: 46.7%; padding: 47px 19.3px; }
+#spot17 { top: 83%; left: 52.9%; padding: 47px 19.2px; }
+#spot18 { top: 83%; left: 59%; padding: 47px 18.7px;}
+#spot19 { top: 83%; left: 65.2%; padding: 47px 20.4px;}
+#spot20 { top: 83%; left: 71.4%; padding: 47px 19.2px;}
+#spot21 { top: 83%; left: 77.5%; padding: 47px 18.8px;}
+#spot22 { top: 83%; left: 83.4%; padding: 47px 17.5px;}
+#spot23 { top: 83%; left: 89.5%; padding: 47px 20.4px;}
+#spot24 { top: 83%; left: 96.1%; padding: 47px 21.8px;}
+/*Motos*/
+#spot25 { top: 36.5%; left: 4.3%; padding: 5px 17px;}
+#spot26 { top: 43.4%; left: 4.3%; padding: 5px 17px;}
+#spot27 { top: 49.8%; left: 4.3%; padding: 4.3px 17px;}
+#spot28 { top: 56.3%; left: 4.3%; padding: 5px 17px;}
+#spot29 { top: 63.6%; left: 4.3%; padding: 6.3px 17px;}
+
+/* Media queries para ajustes de tamaño de pantalla */
+@media (max-width: 768px) {
+    .parking-spot {
+        padding: 1px 5.5px; /* Ajusta el tamaño del padding para dispositivos móviles */
+    }
+    #spot9 { padding: 1px 5.5px; }
+    #spot10 { padding: 2px 0px; }
+    #spot11 { padding: 2px 0px; }
+    #spot12 { padding: 2px 0px; }
+    #spot13 { padding: 2px 0px; }
+    #spot14 { padding: 2px 0px; }
+    #spot15 { padding: 2px 0px; }
+    #spot16 { padding: 2px 0px; }
+    #spot17 { padding: 2px 0px; }
+    #spot18 { padding: 2px 0px; }
+    #spot19 { padding: 2px 0px; }
+    #spot20 { padding: 2px 0px; }
+    #spot21 { padding: 2px 0px; }
+    #spot22 { padding: 2px 0px; }
+    #spot23 { padding: 2px 0px; }
+    #spot24 { padding: 2px 0px; }
+    /*Motos*/
+    #spot25 { padding: 2px 0px; }
+    #spot26 { padding: 2px 0px; }
+    #spot27 { padding: 2px 0px; }
+    #spot28 { padding: 2px 0px; }
+    #spot29 { padding: 2px 0px; }
+}
+
+ /*Contenedor simbologia*/
+ .background-container {
+    background-color: #ffffff; /* Color blanco */
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    padding: 20px; /* Espacio interno para separar del borde */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    width: 300px; /* Ajustar el ancho del contenedor */
+    margin: 0 auto; /* Centrar el contenedor horizontalmente */
+    height: auto; /* Altura automática para ajustar al contenido */
+}
+
+/* Contenedor de simbología */
+.simbologia {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente los elementos dentro */
+    gap: 20px; /* Espacio entre los elementos */
+    width: 100%; /* Asegura que ocupe el ancho del contenedor */
+}
+
+.simbologia-container {
+    margin-top: 0 !important;
+}
+
+.simbologia-item {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos dentro */
+    gap: 10px;
+    padding: 10px 20px; /* Espaciado interno para el estilo de botón */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: hsl(109, 10%, 34%); /* Fondo del botón */
+    border: 2px solid transparent; /* Borde transparente por defecto */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s, border-color 0.3s; /* Transiciones suaves */
+    width: 100%; /* Asegura que ocupe el ancho del contenedor */
+    max-width: 250px; /* Limita el ancho máximo del ítem */
+    text-align: center; /* Centra el texto dentro del ítem */
+}
+
+.simbologia-item:hover {
+    background-color: rgb(127, 236, 127); /* Fondo al pasar el cursor */
+}
+
+.simbologia-item .color-box {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px; /* Bordes redondeados para los cuadros de color */
+}
+
+.red-box {
+    background-color: red;
+}
+
+.green-box {
+    background-color: rgb(76, 219, 76);
+}
+
+.yellow-box {
+    background-color: yellow;
+}
+
+.simbologia-item i {
+    font-size: 16px;
+}
+
+.simbologia-item span {
+    font-weight: bold;
+    /* Color del texto separado por clase */
+}
+
+.red-text {
+    color: rgb(255, 96, 96);
+}
+
+.green-text {
+    color: rgb(76, 219, 76);
+}
+
+.yellow-text {
+    color: yellow;
+}
+
+/* Colores para los íconos */
+.red-icon {
+    color: rgb(255, 96, 96);
+}
+
+.green-icon {
+    color: rgb(76, 219, 76);
+}
+
+.yellow-icon {
+    color: yellow;
+}

@@ -1,0 +1,229 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+    overflow: hidden; /* Oculta el desbordamiento para evitar barras de desplazamiento */
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1; /* Asegura que el encabezado esté por encima del video */
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo img.car-icon,
+header .logo img.logo-icon {
+    height: 40px;
+    margin: 0 10px;
+}
+
+header .logo h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #6c8e30;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #6c8e30;
+    font-weight: bold;
+    margin-left: 20px;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+header nav a:hover {
+    border: 2px solid #6c8e30;
+    background-color: rgba(108, 142, 48, 0.1);
+}
+
+header nav a.inicio-sesion {
+    background-color: #6c8e30;
+    color: white;
+    padding: 10px 20px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1; /* Asegura que el contenido principal esté por encima del video */
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 58%;
+    max-width: 800px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-message {
+    width: 100%;
+    text-align: center;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.welcome-message h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.welcome-message p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    font-style: italic;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.container {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.left {
+    width: 100%;
+    text-align: center;
+}
+
+.left h2 {
+    color: #6c8e30;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.form-group input {
+    width: 94%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group.full-width input[type="submit"] {
+    width: 94%;
+    padding: 15px;
+}
+
+.form-group input[type="submit"] {
+    background-color: #6c8e30;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #557a26;
+    width: 94%;
+}
+
+@media (min-width: 768px) {
+    .layout {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .welcome-message {
+        width: 40%;
+        text-align: left;
+        padding-right: 20px;
+    }
+
+    .container {
+        width: 55%;
+    }
+}
+
+/* Estilos responsivos */
+@media (max-width: 576px) {
+    .header {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .header nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .header nav a, .header .dropdown {
+        width: auto;
+        text-align: center;
+        margin: 5px;
+    }
+
+    .user-icon {
+        align-self: center;
+    }
+
+    .dropdown .dropdown-menu {
+        min-width: 100px;
+    }
+}
