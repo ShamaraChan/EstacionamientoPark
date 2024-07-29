@@ -63,6 +63,17 @@ $conn->close();
     <link href="styles.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <style>
+        .spot-red {
+            background-color: rgba(255, 0, 0, 0.5) !important; /* Rojo con 50% de opacidad */
+        }
+        .spot-green {
+            background-color: rgba(0, 255, 0, 0.5) !important; /* Verde con 50% de opacidad */
+        }
+        .spot-yellow {
+            background-color: rgba(255, 255, 0, 0.5) !important; /* Amarillo con 50% de opacidad */
+        }
+    </style>
 </head>
 <body>
 <header class="header d-flex justify-content-between align-items-center">
@@ -141,8 +152,10 @@ $conn->close();
             <?php
             // Generar los spots dinámicamente
             for ($i = 1; $i <= 24; $i++) {
-                $color = isset($cajones[$i]) ? ($cajones[$i] == 2 ? 'yellow' : ($cajones[$i] == 1 ? 'red' : 'green')) : 'green';
-                echo "<div class='parking-spot' id='spot$i' style='background-color: $color;'>$i</div>";
+                $colorClass = isset($cajones[$i]) ? 
+                    ($cajones[$i] == 2 ? 'spot-yellow' : 
+                    ($cajones[$i] == 1 ? 'spot-red' : 'spot-green')) : 'spot-green';
+                echo "<div class='parking-spot $colorClass' id='spot$i'>$i</div>";
             }
             ?>
         </div>
@@ -157,19 +170,19 @@ $conn->close();
         <div class="d-flex justify-content-center">
             <div class="simbologia">
                 <div class="simbologia-item d-flex align-items-center">
-                    <div class="color-box red-box"></div>
-                    <i class="fas fa-times-circle red-icon ml-2"></i>
-                    <span class="ml-2" style="color: red; font-weight: bold;">Ocupado</span>
+                    <div class="color-box red-box" style="background-color: rgba(255, 0, 0, 0.5);"></div>
+                    <i class="fas fa-times-circle red-icon ml-2" style="color: rgba(255, 0, 0, 0.5);"></i>
+                    <span class="ml-2" style="color: rgba(255, 0, 0, 0.5); font-weight: bold;">Ocupado</span>
                 </div>
                 <div class="simbologia-item d-flex align-items-center">
-                    <div class="color-box green-box"></div>
-                    <i class="fas fa-check-circle green-icon ml-2"></i>
-                    <span class="ml-2" style="color: green; font-weight: bold;">Disponible</span>
+                    <div class="color-box green-box" style="background-color: rgba(0, 255, 0, 0.5);"></div>
+                    <i class="fas fa-check-circle green-icon ml-2" style="color: rgba(0, 255, 0, 0.5);"></i>
+                    <span class="ml-2" style="color: rgba(0, 255, 0, 0.5); font-weight: bold;">Disponible</span>
                 </div>
                 <div class="simbologia-item d-flex align-items-center">
-                    <div class="color-box yellow-box"></div>
-                    <i class="fas fa-ban yellow-icon ml-2"></i>
-                    <span class="ml-2" style="color: yellow; font-weight: bold;">Inhabilitado</span>
+                    <div class="color-box yellow-box" style="background-color: rgba(255, 255, 0, 0.5);"></div>
+                    <i class="fas fa-ban yellow-icon ml-2" style="color: rgba(255, 255, 0, 0.5);"></i>
+                    <span class="ml-2" style="color: rgba(255, 255, 0, 0.5); font-weight: bold;">Inhabilitado</span>
                 </div>
             </div>
         </div>
@@ -199,8 +212,8 @@ $conn->close();
     document.addEventListener('DOMContentLoaded', function() {
         spots.forEach(function(spot) {
             var spotId = spot.id;
-            if (localStorage.getItem(basementId + '-' + spotId) === 'yellow') {
-                spot.style.backgroundColor = 'yellow';
+            if (localStorage.getItem(basementId + '-' + spotId) === 'spot-yellow') {
+                spot.classList.add('spot-yellow');
             }
         });
     });
@@ -209,18 +222,20 @@ $conn->close();
     spots.forEach(function(spot) {
         spot.addEventListener('click', function() {
             var spotId = spot.id.replace('spot', '');
-            var currentColor = spot.style.backgroundColor;
+            var currentClass = spot.classList.contains('spot-yellow') ? 'spot-yellow' : 
+                               (spot.classList.contains('spot-red') ? 'spot-red' : 'spot-green');
 
-            // Determina el nuevo estado y color
-            var newColor = currentColor === 'yellow' ? 'green' : 'yellow';
-            var newStatus = newColor === 'yellow' ? 2 : 0;
+            // Determina el nuevo estado y clase
+            var newClass = currentClass === 'spot-yellow' ? 'spot-green' : 'spot-yellow';
+            var newStatus = newClass === 'spot-yellow' ? 2 : 0;
 
             // Actualiza el color del spot localmente
-            spot.style.backgroundColor = newColor;
+            spot.classList.remove(currentClass);
+            spot.classList.add(newClass);
 
             // Guarda el estado en localStorage
-            if (newColor === 'yellow') {
-                localStorage.setItem(basementId + '-' + spot.id, 'yellow');
+            if (newClass === 'spot-yellow') {
+                localStorage.setItem(basementId + '-' + spot.id, 'spot-yellow');
             } else {
                 localStorage.removeItem(basementId + '-' + spot.id);
             }
@@ -249,7 +264,8 @@ $conn->close();
     function disableSelectedSpots() {
         spots.forEach(function(spot) {
             if (spot.classList.contains('spot-enabled')) {
-                spot.style.backgroundColor = 'yellow';  // Cambiar el color de fondo a amarillo
+                spot.classList.remove('spot-green');
+                spot.classList.add('spot-yellow');
             }
         });
     }

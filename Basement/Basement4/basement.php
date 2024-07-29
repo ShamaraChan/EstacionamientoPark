@@ -39,7 +39,7 @@ $result = $conn->query($sql);
 $spots = [];
 if ($result->num_rows > 0) {
     // Guardar los resultados en un array
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         $spots[$row['N_Cajon']] = $row['disponibilidad'];
     }
 } else {
@@ -59,7 +59,13 @@ $conn->close();
     <link href="styles.css" rel="stylesheet">
     <style>
         .spot-yellow {
-            background-color: yellow !important;
+            background-color: rgba(255, 255, 0, 0.5) !important; /* Amarillo con 50% de transparencia */
+        }
+        .spot-green {
+            background-color: rgba(0, 255, 0, 0.5) !important; /* Verde con 50% de transparencia */
+        }
+        .spot-red {
+            background-color: rgba(255, 0, 0, 0.5) !important; /* Rojo con 50% de transparencia */
         }
     </style>
 </head>
@@ -136,8 +142,10 @@ $conn->close();
                 <?php
                 // Inicializa todos los spots con el color basado en la disponibilidad
                 for ($i = 1; $i <= 26; $i++) {
-                    $color = isset($spots[$i]) ? ($spots[$i] == 2 ? 'yellow' : ($spots[$i] == 1 ? 'red' : 'green')) : 'green'; // Color verde por defecto
-                    echo "<div class='parking-spot' id='spot$i' style='background-color: $color;' onclick='toggleSpot($i)'>$i</div>";
+                    $colorClass = isset($spots[$i]) ? 
+                        ($spots[$i] == 2 ? 'spot-yellow' : ($spots[$i] == 1 ? 'spot-red' : 'spot-green')) 
+                        : 'spot-green'; // Color verde por defecto
+                    echo "<div class='parking-spot $colorClass' id='spot$i' onclick='toggleSpot($i)'>$i</div>";
                 }
                 ?>
             </div>
@@ -150,19 +158,19 @@ $conn->close();
             <div class="d-flex justify-content-center">
                 <div class="simbologia">
                     <div class="simbologia-item d-flex align-items-center">
-                        <div class="color-box red-box"></div>
+                        <div class="color-box spot-red"></div>
                         <i class="fas fa-times-circle red-icon ml-2"></i>
-                        <span class="ml-2" style="color: red; font-weight: bold;">Ocupado</span>
+                        <span class="ml-2" style="color: rgba(255, 0, 0, 0.5); font-weight: bold;">Ocupado</span>
                     </div>
                     <div class="simbologia-item d-flex align-items-center">
-                        <div class="color-box green-box"></div>
+                        <div class="color-box spot-green"></div>
                         <i class="fas fa-check-circle green-icon ml-2"></i>
-                        <span class="ml-2" style="color: green; font-weight: bold;">Disponible</span>
+                        <span class="ml-2" style="color: rgba(0, 255, 0, 0.5); font-weight: bold;">Disponible</span>
                     </div>
                     <div class="simbologia-item d-flex align-items-center">
-                        <div class="color-box yellow-box"></div>
+                        <div class="color-box spot-yellow"></div>
                         <i class="fas fa-ban yellow-icon ml-2"></i>
-                        <span class="ml-2" style="color: yellow; font-weight: bold;">Inhabilitado</span>
+                        <span class="ml-2" style="color: rgba(255, 255, 0, 0.5); font-weight: bold;">Inhabilitado</span>
                     </div>
                 </div>
             </div>
@@ -177,19 +185,19 @@ $conn->close();
     <script>
         function toggleSpot(spotId) {
             const spot = document.getElementById('spot' + spotId);
-            const currentColor = spot.style.backgroundColor;
-            let newColor;
+            const currentColorClass = spot.className.split(' ').find(cls => cls.startsWith('spot-'));
+            let newColorClass;
             let status;
 
-            if (currentColor === 'yellow') {
-                newColor = 'green';
-                status = 1; // Disponible
+            if (currentColorClass === 'spot-yellow') {
+                newColorClass = 'spot-green';
+                status = 0; // Disponible
             } else {
-                newColor = 'yellow';
-                status = 2; // Deshabilitado
+                newColorClass = 'spot-yellow';
+                status = 2; // Inhabilitado
             }
             
-            spot.style.backgroundColor = newColor;
+            spot.className = 'parking-spot ' + newColorClass;
 
             // Enviar solicitud POST al servidor para actualizar el estado
             const xhr = new XMLHttpRequest();
@@ -229,7 +237,7 @@ $conn->close();
             selectedSpots.forEach(spotId => {
                 const spot = document.getElementById('spot' + spotId);
                 if (spot) {
-                    spot.style.backgroundColor = 'yellow';
+                    spot.className = 'parking-spot spot-yellow';
                 }
             });
         }

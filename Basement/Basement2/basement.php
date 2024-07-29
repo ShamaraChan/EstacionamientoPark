@@ -71,6 +71,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="styles.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <style>
+        .spot-red {
+            background-color: rgba(255, 0, 0, 0.5) !important; /* Rojo con 50% de opacidad */
+        }
+        .spot-green {
+            background-color: rgba(0, 255, 0, 0.5) !important; /* Verde con 50% de opacidad */
+        }
+        .spot-yellow {
+            background-color: rgba(255, 255, 0, 0.5) !important; /* Amarillo con 50% de opacidad */
+        }
+    </style>
 </head>
 <body>
 <header class="header d-flex justify-content-between align-items-center">
@@ -148,8 +159,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             for ($i = 1; $i <= 24; $i++) {
                 // Obtener el estado del cajón, usando 0 (disponible) si no está en el array
                 $status = $cajones[$i] ?? 0; // 0 si no existe
-                $color = ($status == 1) ? 'red' : (($status == 2) ? 'yellow' : 'green');
-                echo "<div class='parking-spot' id='spot$i' data-status='$status' style='background-color: $color;'>$i</div>";
+                $colorClass = ($status == 1) ? 'spot-red' : (($status == 2) ? 'spot-yellow' : 'spot-green');
+                echo "<div class='parking-spot $colorClass' id='spot$i' data-status='$status'>$i</div>";
             }
             ?>
         </div>
@@ -164,19 +175,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="d-flex justify-content-center">
             <div class="simbologia">
                 <div class="simbologia-item d-flex align-items-center">
-                    <div class="color-box red-box"></div>
-                    <i class="fas fa-times-circle red-icon ml-2"></i>
-                    <span class="ml-2" style="color: red; font-weight: bold;">Ocupado</span>
+                    <div class="color-box spot-red" style="background-color: rgba(255, 0, 0, 0.5);"></div>
+                    <i class="fas fa-times-circle ml-2" style="color: rgba(255, 0, 0, 0.5);"></i>
+                    <span class="ml-2" style="color: rgba(255, 0, 0, 0.5); font-weight: bold;">Ocupado</span>
                 </div>
                 <div class="simbologia-item d-flex align-items-center">
-                    <div class="color-box green-box"></div>
-                    <i class="fas fa-check-circle green-icon ml-2"></i>
-                    <span class="ml-2" style="color: green; font-weight: bold;">Disponible</span>
+                    <div class="color-box spot-green" style="background-color: rgba(0, 255, 0, 0.5);"></div>
+                    <i class="fas fa-check-circle ml-2" style="color: rgba(0, 255, 0, 0.5);"></i>
+                    <span class="ml-2" style="color: rgba(0, 255, 0, 0.5); font-weight: bold;">Disponible</span>
                 </div>
                 <div class="simbologia-item d-flex align-items-center">
-                    <div class="color-box yellow-box"></div>
-                    <i class="fas fa-ban yellow-icon ml-2"></i>
-                    <span class="ml-2" style="color: yellow; font-weight: bold;">Inhabilitado</span>
+                    <div class="color-box spot-yellow" style="background-color: rgba(255, 255, 0, 0.5);"></div>
+                    <i class="fas fa-ban ml-2" style="color: rgba(255, 255, 0, 0.5);"></i>
+                    <span class="ml-2" style="color: rgba(255, 255, 0, 0.5); font-weight: bold;">Inhabilitado</span>
                 </div>
             </div>
         </div>
@@ -205,17 +216,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             var spotId = spot.id;
             var status = spot.dataset.status;
             var newStatus;
-            var newColor;
+            var newColorClass;
 
             if (status === '0') {
                 newStatus = 2; // Cambia a inhabilitado
-                newColor = 'yellow';
+                newColorClass = 'spot-yellow';
             } else {
                 newStatus = 0; // Cambia a disponible
-                newColor = 'green';
+                newColorClass = 'spot-green';
             }
 
-            spot.style.backgroundColor = newColor;
+            spot.className = 'parking-spot ' + newColorClass;
             spot.dataset.status = newStatus;
 
             // Envía la solicitud AJAX para actualizar el estado en la base de datos
@@ -237,7 +248,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function disableSelectedSpots() {
         spots.forEach(function(spot) {
             if (spot.classList.contains('spot-enabled')) {
-                spot.style.backgroundColor = 'yellow';  // Cambiar el color de fondo a amarillo
+                spot.classList.remove('spot-green');
+                spot.classList.add('spot-yellow');
                 spot.dataset.status = '2';
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '', true); // Enviar la solicitud al mismo archivo
