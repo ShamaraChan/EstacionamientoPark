@@ -15,16 +15,14 @@ include('session.php');
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
     <header class="header d-flex justify-content-between align-items-center">
         <div class="logo">
             <a href="/Estacion/Index.php">
-                <img src="logo.png" height="50px" margin-right="10px">
+                <img src="logo.png" height="50px" style="margin-right: 10px;">
             </a>
         </div>
         <nav class="ml-auto">
-            <!-- Botón Dashboards -->
             <a href="/Estacion/Index.php" class="mr-3">
                 Inicio
                 <i class="bi bi-speedometer2"></i>
@@ -42,6 +40,7 @@ include('session.php');
                     <a class="dropdown-item" href="/Estacion/Level/Level4/level.php">Nivel 4</a>
                 </div>
             </div>
+            
             <div class="dropdown mr-3">
                 <a href="#" class="dropdown-toggle" id="basementsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Sótanos
@@ -55,7 +54,6 @@ include('session.php');
                 </div>
             </div>
             
-            <!-- Botón Cámaras -->
             <div class="dropdown mr-3">
                 <a href="#" class="dropdown-toggle" id="camerasDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Cámaras
@@ -74,19 +72,19 @@ include('session.php');
             <div class="user-icon">
                 <a href="/Estacion/Profile/profile.php">
                     <lord-icon
-                    src="https://cdn.lordicon.com/bgebyztw.json"
-                    trigger="hover"
-                    colors="primary:#109173,secondary:#08a88a"
-                    style="width:35px;height:35px">
+                        src="https://cdn.lordicon.com/bgebyztw.json"
+                        trigger="hover"
+                        colors="primary:#109173,secondary:#08a88a"
+                        style="width:35px;height:35px">
                     </lord-icon>
                 </a>
             </div>
         </nav>
     </header>
 
-    <div class="container mt-4" >
+    <div class="container mt-4">
         <div class="dashboard">
-            <h1></h1>
+            <h1>Dashboard</h1>
             <div class="row mb-4">
                 <div class="col-md-4">
                     <!-- Ocupación del Estacionamiento en Diferentes Niveles -->
@@ -104,11 +102,11 @@ include('session.php');
             <div class="row">
                 <div class="col-md-4">
                     <!-- Tiempo Promedio de Estacionamiento -->
-                    <canvas id="averageParkingTimeChart" width ="100" height="100"></canvas>
+                    <canvas id="averageParkingTimeChart" width="400" height="400"></canvas>
                 </div>
                 <div class="col-md-4">
                     <!-- Predicción de Lugares Disponibles en Tiempo Real -->
-                    <canvas id="realTimePredictionChart" width="100" height="100"></canvas>
+                    <canvas id="realTimePredictionChart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
@@ -122,9 +120,13 @@ include('session.php');
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+    console.log("iniciando script")
     $(document).ready(function() {
         // Obtener datos para los gráficos
+        console.log("previo a tabla.php")
         $.getJSON('tabla.php', function(data) {
+            console.log("Datos recibidos de tabla.php:", data);
+
             // Ocupación del Estacionamiento en Diferentes Niveles
             const occupancyData = {
                 labels: data.ocupacion_niveles.niveles,
@@ -136,10 +138,11 @@ include('session.php');
                 }]
             };
             const ctx1 = document.getElementById('occupancyChart').getContext('2d');
-            const occupancyChart = new Chart(ctx1, {
+            new Chart(ctx1, {
                 type: 'line',
                 data: occupancyData
             });
+            console.log("Datos de ocupación por nivel:", occupancyData);
 
             // Patrones de Entrada y Salida de Vehículos
             const entryExitData = {
@@ -152,10 +155,11 @@ include('session.php');
                 }]
             };
             const ctx2 = document.getElementById('entryExitPatternChart').getContext('2d');
-            const entryExitPatternChart = new Chart(ctx2, {
+            new Chart(ctx2, {
                 type: 'line',
                 data: entryExitData
             });
+            console.log("Datos de entrada y salida de vehículos:", entryExitData);
 
             // Disponibilidad de Lugares a lo Largo del Día
             const availabilityOverDayData = {
@@ -168,41 +172,60 @@ include('session.php');
                 }]
             };
             const ctx3 = document.getElementById('availabilityOverDayChart').getContext('2d');
-            const availabilityOverDayChart = new Chart(ctx3, {
+            new Chart(ctx3, {
                 type: 'line',
                 data: availabilityOverDayData
             });
+            console.log("Datos de disponibilidad a lo largo del día:", availabilityOverDayData);
 
             // Tiempo Promedio de Estacionamiento
             const averageParkingTimeData = {
                 labels: ['0-30 min', '30-60 min', '60-90 min', '90-120 min'],
                 datasets: [{
                     label: 'Número de Vehículos',
-                    data: [data.tiempo_promedio.tiempos.filter(t => t <= 30).length,
-                           data.tiempo_promedio.tiempos.filter(t => t > 30 && t <= 60).length,
-                           data.tiempo_promedio.tiempos.filter(t => t > 60 && t <= 90).length,
-                           data.tiempo_promedio.tiempos.filter(t => t > 90).length],
+                    data: [
+                        data.tiempo_promedio.tiempos.filter(t => t <= 30).length,
+                        data.tiempo_promedio.tiempos.filter(t => t > 30 && t <= 60).length,
+                        data.tiempo_promedio.tiempos.filter(t => t > 60 && t <= 90).length,
+                        data.tiempo_promedio.tiempos.filter(t => t > 90).length
+                    ],
                     backgroundColor: '#FFCE56'
                 }]
             };
             const ctx4 = document.getElementById('averageParkingTimeChart').getContext('2d');
-            const averageParkingTimeChart = new Chart(ctx4, {
+            new Chart(ctx4, {
                 type: 'bar',
                 data: averageParkingTimeData
             });
+            console.log("Datos de tiempo promedio de estacionamiento:", averageParkingTimeData);
 
             // Predicción de Lugares Disponibles en Tiempo Real
             const realTimePredictionData = {
-                labels: ['Ahora'],
-                datasets: [{
-                    label: 'Predicción de Lugares Disponibles',
-                    data: data.prediccion,
-                    borderColor: '#4BC0C0',
-                    fill: false
-                }]
+                labels: data.prediccion.hora,
+                datasets: [
+                    {
+                        label: 'Entradas Previstas',
+                        data: data.prediccion.Entradas_Previstas,
+                        borderColor: '#FF6384',
+                        fill: false
+                    },
+                    {
+                        label: 'Salidas Previstas',
+                        data: data.prediccion.Salidas_Previstas,
+                        borderColor: '#36A2EB',
+                        fill: false
+                    },
+                    {
+                        label: 'Lugares Disponibles',
+                        data: data.prediccion.Lugares_Disponibles,
+                        borderColor: '#4BC0C0',
+                        fill: false
+                    }
+                ]
             };
+            console.log("Datos de predicción de lugares disponibles en tiempo real:", realTimePredictionData);
             const ctx5 = document.getElementById('realTimePredictionChart').getContext('2d');
-            const realTimePredictionChart = new Chart(ctx5, {
+            new Chart(ctx5, {
                 type: 'line',
                 data: realTimePredictionData
             });
@@ -211,4 +234,3 @@ include('session.php');
     </script>
 </body>
 </html>
-

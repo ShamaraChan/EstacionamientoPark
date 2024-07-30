@@ -37,7 +37,7 @@ $entrada_salida_sql = "
     WHERE hora_entrada BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
     GROUP BY DAYOFWEEK(hora_entrada)
 ";
-$entrada_salida_result = $conn->query($entrada_salida_sql);
+$entrada_salida_result = $conn->query($entrada_salida_sql); 
 
 $entradas = array_fill(1, 7, 0);
 
@@ -83,27 +83,50 @@ if ($tiempo_result->num_rows > 0) {
 
 // Obtener datos para el gráfico de Predicción de Lugares Disponibles en Tiempo Real
 $prediccion_sql = "
-    SELECT NOW() AS hora_actual, COUNT(*) AS disponibles
-    FROM cajones
-    WHERE disponibilidad = 'disponible'
+    SELECT hora, Entradas_Previstas, Salidas_Previstas, Lugares_Disponibles
+    FROM predicciones_estacionamiento
 ";
 $prediccion_result = $conn->query($prediccion_sql);
 
-$prediccion = [];
+$hora = [];
+$Entradas_Previstas = [];
+$Salidas_Previstas = [];
+$Lugares_Disponibles = [];
 
 if ($prediccion_result->num_rows > 0) {
-    $row = $prediccion_result->fetch_assoc();
-    $prediccion = [(int) $row['disponibles']];
+    while ($row = $prediccion_result->fetch_assoc()) {
+        $hora[] = $row['hora'];
+        $Entradas_Previstas[] = (int) $row['Entradas_Previstas'];
+        $Salidas_Previstas[] = (int) $row['Salidas_Previstas'];
+        $Lugares_Disponibles[] = (int) $row['Lugares_Disponibles'];
+    }
 }
 
 $conn->close();
 
 // Enviar los datos en formato JSON
+header('Content-Type: application/json');
 echo json_encode(array(
-    "ocupacion_niveles" => array("niveles" => $niveles, "cantidades" => $cantidades),
-    "entrada_salida" => array("labels" => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], "entradas" => $entradas),
-    "disponibilidad_dia" => array("horas" => $horas, "disponibilidad" => $disponibilidades),
-    "tiempo_promedio" => array("tiempos" => $tiempos),
-    "prediccion" => $prediccion
+    "ocupacion_niveles" => array(
+        "niveles" => $niveles,
+        "cantidades" => $cantidades
+    ),
+    "entrada_salida" => array(
+        "labels" => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        "entradas" => $entradas
+    ),
+    "disponibilidad_dia" => array(
+        "horas" => $horas,
+        "disponibilidad" => $disponibilidades
+    ),
+    "tiempo_promedio" => array(
+        "tiempos" => $tiempos
+    ),
+    "prediccion" => array(
+        "hora" => $hora,
+        "Entradas_Previstas" => $Entradas_Previstas,
+        "Salidas_Previstas" => $Salidas_Previstas,
+        "Lugares_Disponibles" => $Lugares_Disponibles
+    )
 ));
 ?>

@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if ($conn->query($sql) === TRUE) {
                     // Registro exitoso, redirigir a login.html
-                    header("Location: /Estacion/Estacion/Login/Login.html");
+                    header("Location: /Estacion/Login/Login.html");
                     exit;
                 } else {
                     echo "Error: " . $sql . "<br>" . $conn->error;

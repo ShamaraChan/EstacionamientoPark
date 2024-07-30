@@ -155,7 +155,7 @@ if (isset($_GET['obtener_datos'])) {
                 </div>
             </div>
 
-            <a href="/EStacion/Statistics/statistics.php" class="mr-3">Estadísticas
+            <a href="/Estacion/Statistics/statistics.php" class="mr-3">Estadísticas
                 <i class="bi bi-bar-chart-line"></i>
             </a>
 
